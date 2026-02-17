@@ -57,7 +57,10 @@ export default function Home() {
     [messages, stakeholders],
   );
   const stakeholderMessageCount = messages.filter((entry) => entry.author !== "Facilitator").length;
-  const completionRate = stakeholders.length === 0 ? 0 : Math.round((stakeholderMessageCount / stakeholders.length) * 100);
+  const respondedStakeholders = new Set(
+    messages.filter((entry) => entry.author !== "Facilitator").map((entry) => entry.author),
+  ).size;
+  const completionRate = stakeholders.length === 0 ? 0 : Math.round((respondedStakeholders / stakeholders.length) * 100);
 
   function addStakeholder(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
